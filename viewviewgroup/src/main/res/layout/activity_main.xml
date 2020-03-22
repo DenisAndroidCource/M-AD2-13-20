@@ -6,13 +6,58 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/viewNumber1Text"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:hint="@string/numberHintText"
+        android:textColor="@color/red"
+        android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Text1" />
+
+    <EditText
+        android:id="@+id/viewNumber2Text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/numberHintText"
+        android:textColor="@color/red"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewNumber1Text"
+        tools:text="Text2" />
+
+    <TextView
+        android:id="@+id/viewResultText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/viewButtonCalculate"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewNumber2Text"
+        tools:text="Text2" />
+
+    <Button
+        android:id="@+id/viewButtonOpenCustomView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Open custom view"
+        app:layout_constraintBottom_toTopOf="@id/viewButtonCalculate"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/viewButtonCalculate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="CALCULATE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
