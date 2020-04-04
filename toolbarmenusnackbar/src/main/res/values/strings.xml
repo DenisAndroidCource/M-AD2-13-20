@@ -1,3 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ToolbarMenuSnackbar</string>
+    <string name="menu_item_share">Share with bluetooth</string>
+    <string name="snackbar_bluetooth_message_error">Bluetooth is not available now</string>
+    <string name="snackbar_bluetooth_error_try_again">Try again</string>
+    <string name="snackbar_shared">Shared with %s</string>
 </resources>
