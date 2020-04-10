@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Dialogs</string>
+    <string name="dialogTitle">Title</string>
+    <string name="dialogMessage">Message</string>
+    <string name="dialogButtonPositive">Ok</string>
+    <string name="dialogButtonNegative">Cancel</string>
+    <string name="dialogButtonNeutral">Later</string>
 </resources>
