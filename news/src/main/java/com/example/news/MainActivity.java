@@ -26,11 +26,27 @@ public class MainActivity extends AppCompatActivity implements NewsListFragment.
     }
 
     private void showNewsViewerFragment(News news) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.fragmentContainer, NewsViewerFragment.newInstance(news), NewsViewerFragment.FRAGMENT_TAG)
-                .addToBackStack(null)
-                .commit();
+        if (hasSecondFragmentContainer()) {
+            NewsViewerFragment fragment = (NewsViewerFragment) getSupportFragmentManager().findFragmentByTag(NewsViewerFragment.FRAGMENT_TAG);
+            if (fragment != null) {
+                fragment.showNews(news);
+            } else {
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragmentContainer2, NewsViewerFragment.newInstance(news), NewsViewerFragment.FRAGMENT_TAG)
+                        .commit();
+            }
+        } else {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.fragmentContainer, NewsViewerFragment.newInstance(news), NewsViewerFragment.FRAGMENT_TAG)
+                    .addToBackStack(null)
+                    .commit();
+        }
+    }
+
+    private boolean hasSecondFragmentContainer() {
+        return findViewById(R.id.fragmentContainer2) != null;
     }
 
     @Override

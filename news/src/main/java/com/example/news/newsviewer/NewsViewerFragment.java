@@ -79,6 +79,10 @@ public class NewsViewerFragment extends Fragment {
         showNews();
     }
 
+    public void showNews(News news){
+        viewerViewModel.setNewsData(news);
+    }
+
     private void initViewModel() {
         viewerViewModel = ViewModelProvider.AndroidViewModelFactory
                 .getInstance(getActivity().getApplication())
