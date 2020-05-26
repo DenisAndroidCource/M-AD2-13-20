@@ -1,43 +1,57 @@
 package com.example.maps.map;
 
 import androidx.arch.core.util.Function;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.example.maps.domain.Photo;
 import com.example.maps.repo.PhotoRepository;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.example.maps.utils.LocationController;
+import com.google.android.gms.maps.model.LatLng;
 
+import java.io.File;
+import java.util.Date;
 import java.util.List;
-
-import static com.example.maps.utils.ImageUtils.prepareIconForMarker;
 
 public class MapFragmentViewModel extends ViewModel {
 
     private PhotoRepository photoRepository;
+    private Function<List<Photo>, List<MapMarker>> mapper;
+    private LocationController locationController;
+    private MutableLiveData<LatLng> latLngMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<Long> photoIdLiveData = new MutableLiveData<>();
 
-    public MapFragmentViewModel(PhotoRepository photoRepository) {
+    public MapFragmentViewModel(PhotoRepository photoRepository, LocationController locationController,
+                                Function<List<Photo>, List<MapMarker>> mapper) {
         this.photoRepository = photoRepository;
+        this.locationController = locationController;
+        this.mapper = mapper;
     }
 
-    public void fetchPhoto(){
-        Transformations.map(photoRepository.getPhoto(), new Function<List<Photo>, List<MapMarker>>() {
-            @Override
-            public List<MapMarker> apply(List<Photo> photoList) {
-                photoList.stream()
-                        .map(photo -> {
-                            MarkerOptions markerOptions = new MarkerOptions()
-                                    .position(photo.getLocation())
-                                    .draggable(false)
-                                    .icon(prepareIconForMarker(photo.getFile()));
-                            return new MapMarker(markerOptions);
-                        });
-                return null;
-            }
-        };
+    void openPhoto(long id) {
+        photoIdLiveData.setValue(id);
     }
 
-    public void saveNewPhoto(){
+    void fetchUserLocation() {
+        latLngMutableLiveData.setValue(locationController.getUserLocation());
+    }
 
+    public LiveData<Long> getPhotoIdLiveData() {
+        return photoIdLiveData;
+    }
+
+    LiveData<LatLng> getLatLngMutableLiveData() {
+        return latLngMutableLiveData;
+    }
+
+    LiveData<List<MapMarker>> fetchPhoto() {
+        return Transformations.map(photoRepository.getPhoto(), mapper);
+    }
+
+    void savePhoto(File photoFile) {
+        Photo photo = new Photo(photoFile, locationController.getUserLocation(), new Date());
+        photoRepository.saveNewPhoto(photo);
     }
 }

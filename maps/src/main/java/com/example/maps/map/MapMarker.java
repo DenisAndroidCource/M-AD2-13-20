@@ -4,13 +4,19 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapMarker {
 
+    private long tag;
     private MarkerOptions markerOptions;
 
-    public MapMarker(MarkerOptions markerOptions) {
+    MapMarker(long tag, MarkerOptions markerOptions) {
+        this.tag = tag;
         this.markerOptions = markerOptions;
     }
 
-    public MarkerOptions getMarkerOptions() {
+    public long getTag() {
+        return tag;
+    }
+
+    MarkerOptions getMarkerOptions() {
         return markerOptions;
     }
 }

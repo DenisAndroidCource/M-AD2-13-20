@@ -11,33 +11,34 @@ import com.example.maps.database.PhotoDao;
 import com.example.maps.database.PhotoEntity;
 import com.example.maps.domain.Photo;
 
-import java.io.File;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class PhotoRepositoryImpl implements PhotoRepository{
+public class PhotoRepositoryImpl implements PhotoRepository {
 
     private PhotoDao photoDao;
     private ExecutorService databaseExecutorService;
-    private LiveData<List<PhotoEntity>> photoEntityListLiveData;
+    private Function<PhotoEntity, Photo> mapper;
 
-    public PhotoRepositoryImpl(@NonNull final Context context) {
+    public PhotoRepositoryImpl(@NonNull final Context context, Function<PhotoEntity, Photo> mapper) {
         AppDatabase appDatabase = AppDatabase.getInstance(context);
         this.photoDao = appDatabase.getPhotoDao();
         this.databaseExecutorService = appDatabase.getDatabaseExecutorService();
+        this.mapper = mapper;
     }
 
     @Override
     public LiveData<List<Photo>> getPhoto() {
-        if (photoEntityListLiveData == null) {
-            photoEntityListLiveData = photoDao.getAll();
-        }
-
-        return Transformations.map(photoEntityListLiveData, photoEntityList -> photoEntityList.stream()
-                .map(photoEntity ->
-                        new Photo(new File(photoEntity.getFilePath()), photoEntity.getLocation(), photoEntity.getDate()))
+        return Transformations.map(photoDao.getAll(), photoEntityList -> photoEntityList.stream()
+                .map(mapper)
                 .collect(Collectors.toList()));
+    }
+
+    @Override
+    public LiveData<Photo> getPhoto(long id) {
+        return Transformations.map(photoDao.getById(id), photoEntity -> mapper.apply(photoEntity));
     }
 
     @Override

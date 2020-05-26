@@ -1,13 +1,12 @@
 package com.example.maps.domain;
 
-import android.graphics.Bitmap;
-
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.File;
 import java.util.Date;
 
 public class Photo {
+    private long id;
     private File file;
     private LatLng location;
     private Date date;
@@ -16,6 +15,17 @@ public class Photo {
         this.file = file;
         this.location = location;
         this.date = date;
+    }
+
+    public Photo(long id, File file, LatLng location, Date date) {
+        this.id = id;
+        this.file = file;
+        this.location = location;
+        this.date = date;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public File getFile() {

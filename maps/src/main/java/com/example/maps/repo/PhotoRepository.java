@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface PhotoRepository {
     LiveData<List<Photo>> getPhoto();
+    LiveData<Photo> getPhoto(long id);
     void saveNewPhoto(final Photo photo);
 }
