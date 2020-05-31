@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:initialLayout="@layout/widget_photo_list"
+    android:minHeight="150dp"
+    android:minResizeWidth="150dp"
+    android:resizeMode="vertical|horizontal"
+    android:updatePeriodMillis="60000" />

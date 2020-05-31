@@ -12,7 +12,10 @@ import com.example.maps.database.PhotoEntity;
 import com.example.maps.domain.Photo;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -30,8 +33,16 @@ public class PhotoRepositoryImpl implements PhotoRepository {
     }
 
     @Override
-    public LiveData<List<Photo>> getPhoto() {
-        return Transformations.map(photoDao.getAll(), photoEntityList -> photoEntityList.stream()
+    public LiveData<List<Photo>> getPhotoLiveData() {
+        return Transformations.map(photoDao.getAllLivaData(), photoEntityList -> photoEntityList.stream()
+                .map(mapper)
+                .collect(Collectors.toList()));
+    }
+
+    @Override
+    public Future<List<Photo>> getPhoto() {
+        return databaseExecutorService.submit(() -> photoDao.getAll()
+                .stream()
                 .map(mapper)
                 .collect(Collectors.toList()));
     }

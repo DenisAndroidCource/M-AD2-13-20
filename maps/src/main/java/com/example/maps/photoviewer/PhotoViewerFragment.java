@@ -52,7 +52,8 @@ public class PhotoViewerFragment extends Fragment {
     private void initViewModel() {
         fragmentViewModel = new ViewModelProvider(this, new PhotoViewerViewModelFactory(getContext()))
                 .get(PhotoViewerFragmentViewModel.class);
-        fragmentViewModel.fetchPhoto(getPhotoId()).observe(getViewLifecycleOwner(), this::showBitmap);
+        fragmentViewModel.fetchPhoto(getPhotoId())
+                .observe(getViewLifecycleOwner(), this::showBitmap);
     }
 
     private void showBitmap(Bitmap bitmap) {

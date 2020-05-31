@@ -15,7 +15,7 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
-public class MapFragmentViewModel extends ViewModel {
+class MapFragmentViewModel extends ViewModel {
 
     private PhotoRepository photoRepository;
     private Function<List<Photo>, List<MapMarker>> mapper;
@@ -23,7 +23,7 @@ public class MapFragmentViewModel extends ViewModel {
     private MutableLiveData<LatLng> latLngMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<Long> photoIdLiveData = new MutableLiveData<>();
 
-    public MapFragmentViewModel(PhotoRepository photoRepository, LocationController locationController,
+    MapFragmentViewModel(PhotoRepository photoRepository, LocationController locationController,
                                 Function<List<Photo>, List<MapMarker>> mapper) {
         this.photoRepository = photoRepository;
         this.locationController = locationController;
@@ -47,7 +47,7 @@ public class MapFragmentViewModel extends ViewModel {
     }
 
     LiveData<List<MapMarker>> fetchPhoto() {
-        return Transformations.map(photoRepository.getPhoto(), mapper);
+        return Transformations.map(photoRepository.getPhotoLiveData(), mapper);
     }
 
     void savePhoto(File photoFile) {

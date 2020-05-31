@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
@@ -22,6 +23,5 @@ public class PhotoViewerFragmentViewModel extends ViewModel {
 
     LiveData<Bitmap> fetchPhoto(long id) {
         return Transformations.map(photoRepository.getPhoto(id), mapper);
-
     }
 }
