@@ -20,6 +20,7 @@ class MapFragmentViewModel extends ViewModel {
     private PhotoRepository photoRepository;
     private Function<List<Photo>, List<MapMarker>> mapper;
     private LocationController locationController;
+
     private MutableLiveData<LatLng> latLngMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<Long> photoIdLiveData = new MutableLiveData<>();
 

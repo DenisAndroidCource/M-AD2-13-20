@@ -34,7 +34,7 @@ public class PhotoViewerViewModelFactory implements ViewModelProvider.Factory {
         return new PhotoRepositoryImpl(context, new PhotoMapper());
     }
 
-    private Function<Photo, Bitmap> getBitmapMapper() {
+    private Function<Photo, PhotoViewState> getBitmapMapper() {
         return new BitmapMapper();
     }
 }

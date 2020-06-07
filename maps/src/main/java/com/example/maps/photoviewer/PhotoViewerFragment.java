@@ -1,11 +1,11 @@
 package com.example.maps.photoviewer;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.maps.R;
+
+import org.jetbrains.annotations.TestOnly;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +36,10 @@ public class PhotoViewerFragment extends Fragment {
     @BindView(R.id.imageView)
     ImageView imageView;
 
+    @BindView(R.id.dateTextView)
+    TextView dateTextView;
+
+    private ViewModelProvider.Factory viewModelFactory = new PhotoViewerViewModelFactory(getContext());
     private PhotoViewerFragmentViewModel fragmentViewModel;
 
     @Nullable
@@ -50,18 +56,25 @@ public class PhotoViewerFragment extends Fragment {
     }
 
     private void initViewModel() {
-        fragmentViewModel = new ViewModelProvider(this, new PhotoViewerViewModelFactory(getContext()))
+        fragmentViewModel = new ViewModelProvider(this, viewModelFactory)
                 .get(PhotoViewerFragmentViewModel.class);
         fragmentViewModel.fetchPhoto(getPhotoId())
-                .observe(getViewLifecycleOwner(), this::showBitmap);
+                .observe(getViewLifecycleOwner(), this::showPhoto);
     }
 
-    private void showBitmap(Bitmap bitmap) {
-        imageView.setImageBitmap(bitmap);
+    private void showPhoto(PhotoViewState photoViewState) {
+        dateTextView.setText(photoViewState.getDateText());
+        dateTextView.setOnClickListener(v -> imageView.setVisibility(View.GONE));
+        imageView.setImageBitmap(photoViewState.getBitmap());
     }
 
     private long getPhotoId() {
         Bundle bundle = getArguments();
         return bundle != null ? bundle.getLong(EXTRA_PHOTO_ID) : -1;
+    }
+
+    @TestOnly
+    void setViewModelFactory(ViewModelProvider.Factory viewModelFactory) {
+        this.viewModelFactory = viewModelFactory;
     }
 }

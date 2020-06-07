@@ -1,15 +1,21 @@
 package com.example.maps.photoviewer;
 
-import android.graphics.Bitmap;
-
 import androidx.arch.core.util.Function;
 
 import com.example.maps.domain.Photo;
 import com.example.maps.utils.ImageUtils;
 
-public class BitmapMapper implements Function<Photo, Bitmap> {
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class BitmapMapper implements Function<Photo, PhotoViewState> {
     @Override
-    public Bitmap apply(Photo photo) {
-        return ImageUtils.fileToBitmap(photo.getFile());
+    public PhotoViewState apply(Photo photo) {
+        return new PhotoViewState(ImageUtils.fileToBitmap(photo.getFile()), getDateText(photo.getDate()));
+    }
+
+    private String getDateText(Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.YYYY");
+        return simpleDateFormat.format(date);
     }
 }
