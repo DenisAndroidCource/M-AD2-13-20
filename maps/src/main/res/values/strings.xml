@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Maps</string>
+    <string name="notificationChannelName">Main Channel</string>
+    <string name="notificationChannelDescription">Channel for notifications</string>
+    <string name="notificationText">Hey! Take a picture!</string>
 </resources>
