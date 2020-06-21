@@ -1,6 +1,7 @@
 package com.example.maps.repo;
 
 import android.content.Context;
+import android.database.Cursor;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -12,9 +13,7 @@ import com.example.maps.database.PhotoEntity;
 import com.example.maps.domain.Photo;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -57,5 +56,25 @@ public class PhotoRepositoryImpl implements PhotoRepository {
         databaseExecutorService.execute(() ->
                 photoDao.insert(new PhotoEntity(photo.getFile().getAbsolutePath(), photo.getLocation(), photo.getDate()))
         );
+    }
+
+    @Override
+    public long savePhoto(Photo photo) {
+        return photoDao.insert(new PhotoEntity(photo.getFile().getAbsolutePath(), photo.getLocation(), photo.getDate()));
+    }
+
+    @Override
+    public Cursor getAllPhotosWithCursor() {
+        return photoDao.getAllPhotosWithCursor();
+    }
+
+    @Override
+    public Cursor getAllPhotoWithCursor(long id) {
+        return photoDao.getAllPhotoWithCursor(id);
+    }
+
+    @Override
+    public int delete(long id) {
+        return 0;
     }
 }

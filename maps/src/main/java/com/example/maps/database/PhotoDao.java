@@ -1,5 +1,7 @@
 package com.example.maps.database;
 
+import android.database.Cursor;
+
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -21,5 +23,11 @@ public interface PhotoDao {
     LiveData<PhotoEntity> getById(long id);
 
     @Insert(onConflict = REPLACE)
-    void insert(PhotoEntity photoEntity);
+    long insert(PhotoEntity photoEntity);
+
+    @Query("SELECT * FROM photo")
+    Cursor getAllPhotosWithCursor();
+
+    @Query("SELECT * FROM photo WHERE id = :id")
+    Cursor getAllPhotoWithCursor(long id);
 }

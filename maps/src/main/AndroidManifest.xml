@@ -68,6 +68,11 @@
 
         <receiver android:name=".alarm.AlarmReceiver" />
 
+        <provider
+            android:authorities="com.example.maps.PHOTO_PROVIDER"
+            android:name=".PhotoContentProvider"
+            android:exported="true"/>
+
     </application>
 
 </manifest>

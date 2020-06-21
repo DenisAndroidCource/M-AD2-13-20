@@ -1,3 +1,5 @@
+include ':animation'
+include ':contentresolverexample'
 rootProject.name='M-AD2-13-20'
 include ':app'
 include ':resources'
